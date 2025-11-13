@@ -1,0 +1,201 @@
+<!-- PROJECT BADGES -->
+<p align="center">
+  <img src="https://img.shields.io/badge/PHP-8.x-blue?logo=php" alt="PHP Version" />
+  <img src="https://img.shields.io/badge/MySQL-Compatible-orange?logo=mysql" alt="MySQL" />
+  <img src="https://img.shields.io/badge/JWT-Authentication-green?logo=jsonwebtokens" alt="JWT" />
+  <img src="https://img.shields.io/badge/Postman-Tested-success?logo=postman" alt="Postman" />
+</p>
+
+<h1 align="center">🧩 API PHP Native — Praktikum Pemrograman Jaringan</h1>
+
+<p align="center">
+  RESTful API menggunakan <b>PHP Native tanpa framework</b>.<br/>
+  Dibuat untuk memenuhi tugas praktikum <b>Modul Praktikum Pemrograman Jaringan</b>.
+</p>
+
+---
+
+## 📘 Deskripsi Proyek
+
+API ini dibangun dari nol menggunakan *PHP Native (tanpa framework)* dengan konsep MVC sederhana.  
+Mendukung fitur:
+- Routing manual
+- Autentikasi JWT (login dan middleware)
+- CRUD User dengan PDO
+- Upload file aman (gambar/pdf)
+- Rate limiting per IP/token
+- Pagination dan validasi input
+- CORS Middleware
+- Dokumentasi OpenAPI-lite & Postman Collection
+
+---
+
+## ⚙ Prasyarat
+
+| Komponen | Versi/Deskripsi |
+|-----------|----------------|
+| PHP | ≥ 8.0 |
+| Database | MySQL / MariaDB |
+| Server Lokal | Laragon / XAMPP / PHP built-in |
+| Postman | Untuk testing API |
+| Composer (opsional) | Untuk autoload PSR-4 |
+
+---
+
+## 🚀 Cara Menjalankan
+
+### ⿡ Persiapan Proyek
+Salin folder ke direktori server kamu:
+C:\laragon\www\api-php-native\Leri
+
+sql
+Copy code
+
+### ⿢ Import Database
+Buat database apiphp, lalu jalankan SQL berikut di phpMyAdmin:
+
+sql
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(150) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  role ENUM('user','admin') DEFAULT 'user',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+Tambahkan user admin:
+
+sql
+Copy code
+INSERT INTO users (name,email,password_hash,role)
+VALUES (
+  'Leri',
+  'Leri@example.com',
+  '$2y$10$9oHEVtM.Kl12.inaleqnnuXIOB',
+  'admin'
+);
+(Ganti $2y$10$9oHEVtM.Kl12.inaleqnnuXIOB dengan hasil password_hash('maleo12', PASSWORD_DEFAULT).)
+
+⿣ Jalankan Server
+Jalankan server lokal:
+
+bash
+Copy code
+php -S localhost:8000 -t public
+Lalu akses:
+
+bash
+Copy code
+http://localhost:8000/api/v1/health
+
+⿤ Akun Default
+makefile
+Copy code
+Email: Leri@example.com
+Password: maleo12
+📂 Struktur Folder
+pgsql
+Copy code
+api-php-native/
+Leri/
+├── public/
+│   ├── index.php
+│   └── .htaccess
+├── src/
+│   ├── Controllers/
+│   ├── Helpers/
+│   ├── Middlewares/
+│   ├── Repositories/
+│   └── Validation/
+├── config/
+│   └── env.php
+├── uploads/
+├── logs/
+├── README.md
+├── openapi-lite.yaml
+├── CHANGELOG.md
+└── API PHP Native.postman_collection.json
+
+🧠 Fitur Utama
+Fitur	Deskripsi
+🔹 Routing Manual	Mengatur endpoint API di public/index.php
+🔹 Response JSON	Format response konsisten (Response::json())
+🔹 JWT Auth	Login menghasilkan token JWT, dicek lewat middleware
+🔹 Upload File Aman	Validasi MIME type dan batas 2MB
+🔹 Rate Limiting	Batasi request per IP/token
+🔹 Pagination	Diterapkan di endpoint /users
+🔹 CORS Middleware	Mengizinkan akses dari frontend (browser)
+🔹 Postman + OpenAPI	Dokumentasi dan testing otomatis
+
+🧪 Testing API Menggunakan Postman
+Gunakan koleksi API PHP Native.postman_collection.json untuk uji cepat di Postman.
+
+🔑 Login
+Endpoint:
+
+bash
+Copy code
+POST /api/v1/auth/login
+Body (JSON):
+
+json
+Copy code
+{
+  "email": "Leri@example.com",
+  "password": "maleo12"
+}
+Setelah berhasil login, Postman otomatis menyimpan token di variabel {{token}}.
+
+📋 Endpoint Utama
+Method	Endpoint	Deskripsi
+GET	/api/v1/health	Cek status server
+POST	/api/v1/auth/login	Login user
+GET	/api/v1/users	Tampilkan daftar user
+POST	/api/v1/users	Tambahkan user baru
+PUT	/api/v1/users/{id}	Update user
+DELETE	/api/v1/users/{id}	Hapus user
+POST	/api/v1/upload	Upload file (gambar/pdf)
+
+🌐 Dokumentasi OpenAPI-lite
+File dokumentasi API tersedia di:
+openapi-lite.yaml
+
+Kamu bisa membuka file ini di Swagger Editor:
+👉 https://editor.swagger.io
+dan menampilkan dokumentasi otomatis API kamu.
+
+🧾 Changelog
+Lihat file CHANGELOG.md untuk catatan versi.
+Contoh:
+
+markdown
+Copy code
+## [1.0.0] - 2025-11-12
+### Added
+- Routing dasar
+- JWT Auth
+- CRUD Users + Validation
+- Upload File Aman
+- Rate Limiting
+- Dokumentasi OpenAPI & Postman
+🧰 Troubleshooting
+Masalah	Penyebab	Solusi
+❌ 404 Route not found	URL salah	Pastikan path sesuai route di index.php
+⚠ 401 Invalid credentials	Password salah / user belum ada	Periksa tabel users
+⏱ 429 Too Many Requests	Melebihi limit request	Tunggu 1 menit lalu ulangi
+📁 Upload gagal	File terlalu besar atau bukan gambar/pdf	Pastikan ukuran < 2MB dan format valid
+
+👨‍💻 Pengembang
+Nama	Keterangan
+Nama:	(Leri Lea Yolit L)
+NIM:	(223611056)
+Kelas:	(D5)
+Dosen Pengampu:	(Semuel Yacobus)
+
+📚 Lisensi
+Proyek ini digunakan untuk keperluan pembelajaran Pemrograman Jaringan.
+Tidak untuk tujuan komersial atau distribusi ulang tanpa izin dosen pengampu.
+
+<p align="center"> Dibuat dengan kerja kerasa dan stress kalo eror menggunakan <b>PHP Native</b><br/> © Kelas D5 Praktikum Pemrograman Jaringan ,2025 Universitas Kristen Indonesia Toraja(UKIT)</p> 
