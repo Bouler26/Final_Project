@@ -15,15 +15,14 @@ use Src\Helpers\Response;
 use Src\Middlewares\CorsMiddleware;
 use Src\Helpers\RateLimiter;
 
-
 CorsMiddleware::handle($cfg);
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { 
     http_response_code(204); 
     exit; 
 }
 
-$key = isset($_SERVER['HTTP_AUTHORIZATION']) ? 'ip:' . $_SERVER['HTTP_AUTHORIZATION'] : 'ip:' . ($_SERVER['REMOTE_ADDR'] ?? 'unknown');
 
+$key = isset($_SERVER['HTTP_AUTHORIZATION']) ? 'ip:' . $_SERVER['HTTP_AUTHORIZATION'] : 'ip:' . ($_SERVER['REMOTE_ADDR'] ?? 'unknown');
 if(!RateLimiter::check($key, 5, 60)) {
     return Response::jsonError(429, "Too Many Requests");
 }
@@ -44,6 +43,9 @@ $routes = [
     ['DELETE', '/api/v1/users/{id}', 'Src\\Controllers\\UserController@destroy'],
     ['POST', '/api/v1/upload', 'Src\\Controllers\\UploadController@store'],
     ['GET', '/api/v1/version', 'Src\\Controllers\\VersionController@show'],
+    ['POST', '/api/v1/jwt/generate', 'Src\\Controllers\\JwtController@generate'],
+    ['POST', '/api/v1/jwt/verify', 'Src\\Controllers\\JwtController@verify'],
+    ['GET', '/api/v1/contract', 'Src\\Controllers\\ApiContractController@index'],
 ];
 
 function matchRoute($routes, $method, $path) {

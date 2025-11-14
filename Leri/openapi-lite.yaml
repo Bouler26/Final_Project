@@ -31,7 +31,7 @@ paths:
                   example: Leri@example.com
                 password:
                   type: string
-                  example: maleo12
+                  example: Leri99
       responses:
         '200':
           description: Login berhasil, token JWT dikembalikan
@@ -71,7 +71,7 @@ paths:
                   example: Leri@example.com
                 password:
                   type: string
-                  example: maleo12
+                  example: Leri99
                 role:
                   type: string
                   enum: [user, admin]

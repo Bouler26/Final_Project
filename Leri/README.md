@@ -76,7 +76,7 @@ VALUES (
   '$2y$10$9oHEVtM.Kl12.inaleqnnuXIOB',
   'admin'
 );
-(Ganti $2y$10$9oHEVtM.Kl12.inaleqnnuXIOB dengan hasil password_hash('maleo12', PASSWORD_DEFAULT).)
+(Ganti $2y$10$9oHEVtM.Kl12.inaleqnnuXIOB dengan hasil password_hash('Leri99', PASSWORD_DEFAULT).)
 
 ⿣ Jalankan Server
 Jalankan server lokal:
@@ -94,29 +94,29 @@ http://localhost:8000/api/v1/health
 makefile
 Copy code
 Email: Leri@example.com
-Password: maleo12
+Password: Leri99
 📂 Struktur Folder
 pgsql
 Copy code
 api-php-native/
-Leri/
-├── public/
-│   ├── index.php
-│   └── .htaccess
-├── src/
-│   ├── Controllers/
-│   ├── Helpers/
-│   ├── Middlewares/
-│   ├── Repositories/
-│   └── Validation/
-├── config/
-│   └── env.php
-├── uploads/
-├── logs/
-├── README.md
-├── openapi-lite.yaml
-├── CHANGELOG.md
-└── API PHP Native.postman_collection.json
+    Leri/
+        ├── public/
+        │   ├── index.php
+        │   └── .htaccess
+        ├── src/
+        │   ├── Controllers/
+        │   ├── Helpers/
+        │   ├── Middlewares/
+        │   ├── Repositories/
+        │   └── Validation/
+        ├── config/
+        │   └── env.php
+        ├── uploads/
+        ├── logs/
+        ├── README.md
+        ├── openapi-lite.yaml
+        ├── CHANGELOG.md
+        └── API PHP Native.postman_collection.json
 
 🧠 Fitur Utama
 Fitur	Deskripsi
@@ -144,7 +144,7 @@ json
 Copy code
 {
   "email": "Leri@example.com",
-  "password": "maleo12"
+  "password": "Leri99"
 }
 Setelah berhasil login, Postman otomatis menyimpan token di variabel {{token}}.
 
